@@ -15,7 +15,7 @@ find_package(Qt4 REQUIRED)
 include(UseQt4)
 include(CommonUtils)
 
-option(VKIT_WITH_OUATH "Enable webkit based oauth authorization" ON)
+option(VKIT_WITH_OAUTH "Enable webkit based oauth authorization" ON)
 option(VKIT_WITH_QMLAPI "Enable QtQuick bindings for vkit" ON)
 option(VKIT_INSTALL_HEADERS "Install devel headers for vkit" ON)
 
