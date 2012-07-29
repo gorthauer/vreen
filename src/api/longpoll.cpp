@@ -71,6 +71,7 @@ LongPoll::Mode LongPoll::mode() const
 
 int LongPoll::pollInterval() const
 {
+    return d_func()->pollInterval;
 }
 
 void LongPoll::setRunning(bool set)
