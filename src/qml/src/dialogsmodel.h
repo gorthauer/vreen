@@ -58,7 +58,7 @@ protected:
     virtual void doRemoveMessage(int index);
 private slots:
     void onDialogsReceived(const QVariant &dialogs);
-	void onAddMessage(const vk::Message &message);
+    void onAddMessage(const vk::Message &message);
 private:
     QWeakPointer<vk::Client> m_client;
     int m_unreadCount;

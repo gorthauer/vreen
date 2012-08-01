@@ -57,8 +57,8 @@ class VK_SHARED_EXPORT Client : public QObject
     Q_PROPERTY(vk::GroupManager* groupManager READ groupManager NOTIFY groupManagerChanged DESIGNABLE true)
     Q_PROPERTY(vk::LongPoll* longPoll READ longPoll NOTIFY longPollChanged DESIGNABLE true)
     Q_PROPERTY(vk::Contact* me READ me NOTIFY meChanged DESIGNABLE true)
-	Q_PROPERTY(QString activity READ activity WRITE setActivity NOTIFY activityChanged DESIGNABLE true)
-	Q_PROPERTY(bool invisible READ isInvisible WRITE setInvisible NOTIFY invisibleChanged)
+    Q_PROPERTY(QString activity READ activity WRITE setActivity NOTIFY activityChanged DESIGNABLE true)
+    Q_PROPERTY(bool invisible READ isInvisible WRITE setInvisible NOTIFY invisibleChanged)
 
     Q_ENUMS(State)
     Q_ENUMS(Error)
@@ -71,14 +71,14 @@ public:
         StateInvalid
     };
     enum Error {
-		ErrorUnknown					= 1,
-		ErrorApplicationDisabled		= 2,
-		ErrorIncorrectSignature			= 4,
-		ErrorAuthorizationFailed		= 5,
-		ErrorToManyRequests				= 6,
-		ErrorPermissionDenied			= 7,
-		ErrorCaptchaNeeded				= 14,
-		ErrorMissingOrInvalidParameter	= 100
+        ErrorUnknown                    = 1,
+        ErrorApplicationDisabled        = 2,
+        ErrorIncorrectSignature         = 4,
+        ErrorAuthorizationFailed        = 5,
+        ErrorToManyRequests             = 6,
+        ErrorPermissionDenied           = 7,
+        ErrorCaptchaNeeded              = 14,
+        ErrorMissingOrInvalidParameter  = 100
     };
 
     explicit Client(QObject *parent = 0);
@@ -90,30 +90,30 @@ public:
     void setLogin(const QString &login);
     State connectionState() const;
     bool isOnline() const;
-	QString activity() const;
-	void setActivity(const QString &activity);
-	bool isInvisible() const;
-	void setInvisible(bool set);
+    QString activity() const;
+    void setActivity(const QString &activity);
+    bool isInvisible() const;
+    void setInvisible(bool set);
 
     Connection *connection() const;
     Connection *connection();
     void setConnection(Connection *connection);
     Roster *roster() const;
     Roster *roster();
-	LongPoll *longPoll() const;
-	LongPoll *longPoll();
+    LongPoll *longPoll() const;
+    LongPoll *longPoll();
     GroupManager *groupManager() const;
     GroupManager *groupManager();
 
     Reply *request(const QUrl &);
     Reply *request(const QString &method, const QVariantMap &args = QVariantMap());
 
-	Reply *sendMessage(const Message &message);
-	Reply *addLike(int ownerId, int postId, bool retweet = false, const QString &message = QString()); //TODO move method
-	Reply *deleteLike(int ownerId, int postId); //TODO move method
+    Reply *sendMessage(const Message &message);
+    Reply *addLike(int ownerId, int postId, bool retweet = false, const QString &message = QString()); //TODO move method
+    Reply *deleteLike(int ownerId, int postId); //TODO move method
 
     Q_INVOKABLE Contact *me() const;
-	Q_INVOKABLE Contact *contact(int id) const;
+    Q_INVOKABLE Contact *contact(int id) const;
 public slots:
     void connectToHost();
     void connectToHost(const QString &login, const QString &password);
@@ -128,11 +128,11 @@ signals:
     void rosterChanged(vk::Roster*);
     void groupManagerChanged(vk::GroupManager*);
     void longPollChanged(vk::LongPoll*);
-	void meChanged(vk::Buddy *me);
-	void activityChanged(const QString &activity);
-	void invisibleChanged(bool set);
+    void meChanged(vk::Buddy *me);
+    void activityChanged(const QString &activity);
+    void invisibleChanged(bool set);
 protected:
-	Reply *setStatus(const QString &text, int aid = 0);
+    Reply *setStatus(const QString &text, int aid = 0);
     QScopedPointer<ClientPrivate> d_ptr;
 
 private:
@@ -140,9 +140,9 @@ private:
     Q_PRIVATE_SLOT(d_func(), void _q_connection_state_changed(vk::Client::State))
     Q_PRIVATE_SLOT(d_func(), void _q_error_received(int))
     Q_PRIVATE_SLOT(d_func(), void _q_reply_finished(const QVariant &))
-	Q_PRIVATE_SLOT(d_func(), void _q_activity_update_finished(const QVariant &))
-	Q_PRIVATE_SLOT(d_func(), void _q_update_online())
-	Q_PRIVATE_SLOT(d_func(), void _q_network_manager_error(int))
+    Q_PRIVATE_SLOT(d_func(), void _q_activity_update_finished(const QVariant &))
+    Q_PRIVATE_SLOT(d_func(), void _q_update_online())
+    Q_PRIVATE_SLOT(d_func(), void _q_network_manager_error(int))
 };
 
 } // namespace vk

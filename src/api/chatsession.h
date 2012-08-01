@@ -52,8 +52,8 @@ signals:
     void messageDeleted(int id);
     void messageReadStateChanged(int mid, bool isRead);
 protected:
-	virtual Reply *doGetHistory(int count = 16, int offset = 0);
-	virtual Reply *doSendMessage(const vk::Message &message);
+    virtual Reply *doGetHistory(int count = 16, int offset = 0);
+    virtual Reply *doSendMessage(const vk::Message &message);
 private:
 
     Q_PRIVATE_SLOT(d_func(), void _q_history_received(const QVariant &))

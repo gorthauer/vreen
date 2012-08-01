@@ -45,13 +45,13 @@ public:
         MessageFlagsReplaced= 1,
         MessageFlagsSet     = 2,
         MessageFlagsReseted = 3,
-        MessageAdded		= 4,
+        MessageAdded        = 4,
         UserOnline          = 8,
         UserOffline         = 9,
-        GroupChatUpdated	= 51,
-        ChatTyping			= 61,
-        GroupChatTyping		= 62,
-        UserCall			= 70
+        GroupChatUpdated    = 51,
+        ChatTyping          = 61,
+        GroupChatTyping     = 62,
+        UserCall            = 70
 
     };
 

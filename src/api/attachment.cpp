@@ -48,10 +48,10 @@ public:
         ownerId(0),
         mediaId(0) {}
     AttachmentData(const AttachmentData &o) : QSharedData(o),
-		type(o.type),
+        type(o.type),
         data(o.data),
         ownerId(o.ownerId),
-		mediaId(o.mediaId) {}
+        mediaId(o.mediaId) {}
     Attachment::Type type;
     int ownerId;
     int mediaId;

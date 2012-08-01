@@ -93,7 +93,7 @@ class BuddyPrivate : public ContactPrivate
 public:
     BuddyPrivate(Contact *q, int id, Client *client) :
         ContactPrivate(q, id, client),
-		status(Buddy::Offline),
+        status(Buddy::Offline),
         isFriend(false)
     {
         type = Contact::BuddyType;

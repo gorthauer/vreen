@@ -56,12 +56,12 @@ public:
         FlagMedia    = 512
     };
     Q_DECLARE_FLAGS(Flags, Flag)
-	enum Filter {
-		FilterNone			= 0,
-		FilterUnread		= 1,
-		FilterNotFromChat	= 2,
-		FilterFromFriends	= 4
-	};
+    enum Filter {
+        FilterNone          = 0,
+        FilterUnread        = 1,
+        FilterNotFromChat   = 2,
+        FilterFromFriends   = 4
+    };
 
     Message(Client *client = 0);
     Message(const QVariantMap &data, Client *client);
@@ -72,14 +72,14 @@ public:
 
     Client *client() const;
 
-	int id() const;
-	void setId(int id);
+    int id() const;
+    void setId(int id);
     QDateTime date() const;
     void setDate(const QDateTime &date);
-	int fromId() const;
-	void setFromId(int id);
-	int toId() const;
-	void setToId(int id);
+    int fromId() const;
+    void setFromId(int id);
+    int toId() const;
+    void setToId(int id);
     Contact *from() const;
     void setFrom(Contact *from);
     Contact *to() const;
@@ -100,7 +100,7 @@ public:
     Attachment::List attachments(Attachment::Type type) const;
     void setAttachments(const Attachment::List &attachmentList);
 
-	static MessageList fromVariantList(const QVariantList &list, Client *client);
+    static MessageList fromVariantList(const QVariantList &list, Client *client);
 protected:
     QSharedDataPointer<MessageData> d;
 };

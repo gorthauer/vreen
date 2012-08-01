@@ -43,10 +43,10 @@ public:
     virtual QNetworkReply *request(const QString &method, const QVariantMap &args = QVariantMap()) = 0;
     virtual Client::State connectionState() const = 0;
     virtual int uid() const = 0;
-	virtual void clear();
+    virtual void clear();
 signals:
     void connectionStateChanged(vk::Client::State connectionState);
-	void error(vk::Client::Error);
+    void error(vk::Client::Error);
 };
 
 } //namespace vk

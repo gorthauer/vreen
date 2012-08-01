@@ -42,7 +42,7 @@ public:
     virtual QNetworkReply *request(const QString &method, const QVariantMap &args);
     virtual Client::State connectionState() const;
     virtual int uid() const;
-	virtual void clear();
+    virtual void clear();
 
     using Connection::get;
     QNetworkReply *get(const QString &method, const QVariantMap &args = QVariantMap());
@@ -55,12 +55,12 @@ protected slots:
     void onReplyError(QNetworkReply::NetworkError error);
 private:
     Client::State m_connectionState;
-	struct AccessToken {
-		AccessToken() {}
-		QByteArray accessToken;
-		int expireTime;
-		int uid;
-	};
+    struct AccessToken {
+        AccessToken() {}
+        QByteArray accessToken;
+        int expireTime;
+        int uid;
+    };
     AccessToken m_token;
 };
 

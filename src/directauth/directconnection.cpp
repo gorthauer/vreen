@@ -110,14 +110,14 @@ Client::State DirectConnection::connectionState() const
 
 int DirectConnection::uid() const
 {
-	return m_token.uid;
+    return m_token.uid;
 }
 
 void DirectConnection::clear()
 {
-	m_token.accessToken.clear();
-	m_token.expireTime = 0;
-	m_token.uid = 0;
+    m_token.accessToken.clear();
+    m_token.expireTime = 0;
+    m_token.uid = 0;
 }
 
 QNetworkReply *DirectConnection::get(const QString &method, const QVariantMap &args)
@@ -179,8 +179,8 @@ void DirectConnection::getTokenFinished()
     case QNetworkReply::AuthenticationRequiredError: //TODO
     default:
         disconnectFromHost();
-		emit error(Client::ErrorAuthorizationFailed);
-		break;
+        emit error(Client::ErrorAuthorizationFailed);
+        break;
     }
 }
 

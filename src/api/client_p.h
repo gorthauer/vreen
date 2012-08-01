@@ -44,31 +44,31 @@ class ClientPrivate
 {
     Q_DECLARE_PUBLIC(Client)
 public:
-	ClientPrivate(Client *q) : q_ptr(q), isInvisible(false)
-	{
-		onlineUpdater.setInterval(15000 * 60);
-		onlineUpdater.setSingleShot(false);
-		q->connect(&onlineUpdater, SIGNAL(timeout()), q, SLOT(_q_update_online()));
-	}
+    ClientPrivate(Client *q) : q_ptr(q), isInvisible(false)
+    {
+        onlineUpdater.setInterval(15000 * 60);
+        onlineUpdater.setSingleShot(false);
+        q->connect(&onlineUpdater, SIGNAL(timeout()), q, SLOT(_q_update_online()));
+    }
     Client *q_ptr;
     QString login;
     QString password;
     QWeakPointer<Connection> connection;
-	QWeakPointer<Roster> roster;
-	QWeakPointer<LongPoll> longPoll;
+    QWeakPointer<Roster> roster;
+    QWeakPointer<LongPoll> longPoll;
     QPointer<GroupManager> groupManager;
-	QString activity;
-	bool isInvisible;
-	QTimer onlineUpdater;
+    QString activity;
+    bool isInvisible;
+    QTimer onlineUpdater;
 
-	void setOnlineUpdaterRunning(bool set);
+    void setOnlineUpdaterRunning(bool set);
 
     void _q_connection_state_changed(vk::Client::State state);
-	void _q_error_received(int error);
-	void _q_reply_finished(const QVariant &);
-	void _q_network_manager_error(int);
-	void _q_activity_update_finished(const QVariant &);
-	void _q_update_online();
+    void _q_error_received(int error);
+    void _q_reply_finished(const QVariant &);
+    void _q_network_manager_error(int);
+    void _q_activity_update_finished(const QVariant &);
+    void _q_update_online();
     void processReply(Reply *reply);
 };
 

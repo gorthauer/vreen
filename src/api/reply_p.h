@@ -51,7 +51,7 @@ public:
         QVariantMap map = JSON::parse(reply->readAll()).toMap();
         //TODO error and captcha handler
 
-		//qDebug() << "--Reply finished: " << reply->url().encodedPath();
+        //qDebug() << "--Reply finished: " << reply->url().encodedPath();
 
         response = map.value("response");
         if (!response.isNull()) {

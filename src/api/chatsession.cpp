@@ -124,8 +124,8 @@ Reply *ChatSession::doGetHistory(int count, int offset)
 
 Reply *ChatSession::doSendMessage(const Message &message)
 {
-	Q_D(ChatSession);
-	return d->contact->client()->sendMessage(message);
+    Q_D(ChatSession);
+    return d->contact->client()->sendMessage(message);
 }
 
 void ChatSessionPrivate::_q_history_received(const QVariant &response)

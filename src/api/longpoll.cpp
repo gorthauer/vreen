@@ -152,7 +152,7 @@ void LongPollPrivate::_q_on_data_recieved(const QVariant &response)
             int cid = update.value(3).toInt();
             //qDebug() << (flags & Message::FlagChat);
             //if (flags & Message::FlagChat)
-            //	cid -= chatMessageOffset;
+            //  cid -= chatMessageOffset;
             message.setId(update.value(1).toInt());
             message.setFlags(flags);
             if (flags & Message::FlagOutbox) {

@@ -24,16 +24,16 @@ public:
     Client *client() const;
     int uid() const;
 public slots:
-	Reply *getHistory(int count = 16, int offset = 0);
-	Reply *sendMessage(const QString &body, const QString &subject = QString());
-	Reply *sendMessage(const Message &message);
+    Reply *getHistory(int count = 16, int offset = 0);
+    Reply *sendMessage(const QString &body, const QString &subject = QString());
+    Reply *sendMessage(const Message &message);
 signals:
     void messageAdded(const vk::Message &message);
     void messageDeleted(int id);
     void messageReadStateChanged(int mid, bool isRead);
 protected:
-	virtual Reply *doSendMessage(const vk::Message &message) = 0;
-	virtual Reply *doGetHistory(int count, int offset) = 0;
+    virtual Reply *doSendMessage(const vk::Message &message) = 0;
+    virtual Reply *doGetHistory(int count, int offset) = 0;
     QScopedPointer<MessageSessionPrivate> d_ptr;
 };
 
