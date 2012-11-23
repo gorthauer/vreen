@@ -57,10 +57,10 @@ void AudioModel::getAudio(int count, int offset)
     }
 }
 
-void AudioModel::searchAudio(const QString &query, int count, int offset)
+void AudioModel::searchAudio(const QString& query, int count, int offset, bool autoComplete, Vreen::AudioProvider::SortOrder sort, bool withLyrics)
 {
     if (m_provider.data()) {
-        auto reply = m_provider.data()->searchAudio(query, count, offset);
+        auto reply = m_provider.data()->searchAudio(query, count, offset, autoComplete, sort, withLyrics);
         connect(reply, SIGNAL(resultReady(QVariant)),
                 this, SLOT(onResultReady()));
     }

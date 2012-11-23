@@ -43,7 +43,7 @@ public:
     void setOwner(Vreen::Contact* owner);
 public slots:
     void getAudio(int count = 100, int offset = 0);
-    void searchAudio(const QString &query, int count = 50, int offset = 0);
+    void searchAudio(const QString& query, int count = 50, int offset = 0, bool autoComplete = true, Vreen::AudioProvider::SortOrder sort = Vreen::AudioProvider::SortByPopularity, bool withLyrics = false);
 signals:
     void ownerChanged(Vreen::Contact*);
     void requestFinished();

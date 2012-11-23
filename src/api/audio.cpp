@@ -35,10 +35,9 @@ class AudioProviderPrivate
 {
     Q_DECLARE_PUBLIC(AudioProvider)
 public:
-    AudioProviderPrivate(AudioProvider *q, Client *client) : q_ptr(q), client(client), autoComplete(true) {}
+    AudioProviderPrivate(AudioProvider *q, Client *client) : q_ptr(q), client(client) {}
     AudioProvider *q_ptr;
     Client *client;
-    bool autoComplete;
 
 	static QVariant handleAudio(const QVariant &response) {
 		AudioItemList items;
@@ -85,7 +84,8 @@ AudioItemListReply *AudioProvider::getContactAudio(int uid, int count, int offse
 {
     Q_D(AudioProvider);
     QVariantMap args;
-    args.insert(uid > 0 ? "uid" : "gid", qAbs(uid));
+    if (uid)
+        args.insert(uid > 0 ? "uid" : "gid", qAbs(uid));
     args.insert("count", count);
     args.insert("offset", offset);
 
@@ -95,19 +95,24 @@ AudioItemListReply *AudioProvider::getContactAudio(int uid, int count, int offse
 
 /*!
  * \brief AudioProvider::searchAudio \link http://vk.com/developers.php?oid=-1&p=audio.search
+ *
  * \param query
+ * \param autocomplete
+ * \param lyrics
  * \param count
  * \param offset
- * \return
- */
-AudioItemListReply *AudioProvider::searchAudio(const QString &query, int count, int offset)
+ * \return reply
+ **/
+AudioItemListReply *AudioProvider::searchAudio(const QString& query, int count, int offset, bool autoComplete, Vreen::AudioProvider::SortOrder sort, bool withLyrics)
 {
     Q_D(AudioProvider);
     QVariantMap args;
     args.insert("q", query);
+    args.insert("auto_complete", autoComplete);
+    args.insert("sort", static_cast<int>(sort));
+    args.insert("lyrics", withLyrics);
     args.insert("count", count);
     args.insert("offset", offset);
-    args.insert("auto_complete", d->autoComplete);
 
     auto reply = d->client->request<AudioItemListReply>("audio.search", args, AudioProviderPrivate::handleAudio);
     return reply;
