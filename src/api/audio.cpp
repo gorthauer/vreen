@@ -24,6 +24,7 @@
 ****************************************************************************/
 #include "audio.h"
 #include <client.h>
+#include <QStringList>
 #include <QUrl>
 #include <QCoreApplication>
 #include <QDebug>
@@ -116,6 +117,34 @@ AudioItemListReply *AudioProvider::searchAudio(const QString& query, int count, 
 
     auto reply = d->client->request<AudioItemListReply>("audio.search", args, AudioProviderPrivate::handleAudio);
     return reply;
+}
+
+/*!
+ * \brief AudioProvider::getAudioById \link http://vk.com/developers.php?o=-1&p=audio.getById
+ *
+ * \param audios
+ * \return 
+ */
+AudioItemListReply* AudioProvider::getAudioById(const AudioItemList& audios)
+{
+    QStringList ids;
+    foreach (AudioItem audio, audios)
+        ids.append(QString::number(audio.ownerId()) + "_" + QString::number(audio.id()));
+    return getAudioById(ids);
+}
+
+/*!
+ * \brief AudioProvider::getAudioById \link http://vk.com/developers.php?o=-1&p=audio.getById
+ *
+ * \param ids
+ * \return
+ **/
+AudioItemListReply* AudioProvider::getAudioById(const QStringList& ids)
+{
+    Q_D(AudioProvider);
+    QVariantMap args;
+    args.insert("audios", ids.join(","));
+    auto reply = d->client->request<AudioItemListReply>("audio.getById", args, AudioProviderPrivate::handleAudio);
 }
 
 class AudioModel;
