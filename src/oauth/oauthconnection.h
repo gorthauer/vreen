@@ -39,8 +39,10 @@ class OAuthConnection : public Connection
     Q_OBJECT
     Q_DECLARE_PRIVATE(OAuthConnection)
     Q_ENUMS(DisplayType)
+    Q_FLAGS(Scopes)
     Q_PROPERTY(int clientId READ clientId WRITE setClientId NOTIFY clientIdChanged)
     Q_PROPERTY(DisplayType displayType READ displayType WRITE setDisplayType)
+    Q_PROPERTY(Scopes scopes READ scopes WRITE setScopes NOTIFY scopesChanged)
 public:
     enum DisplayType {
         Page,
@@ -48,6 +50,28 @@ public:
         Touch,
         Wap
     };
+    enum Scope {
+        notify        = 0x1,
+        friends       = 0x2,
+        photos        = 0x4,
+        audio         = 0x8,
+        video         = 0x10,
+        docs          = 0x20,
+        notes         = 0x40,
+        pages         = 0x80,
+        status        = 0x100,
+        offers        = 0x200,
+        questions     = 0x400,
+        wall          = 0x800,
+        groups        = 0x1000,
+        messages      = 0x2000,
+        notifications = 0x4000,
+        stats         = 0x8000,
+        ads           = 0x10000,
+        offline       = 0x20000
+    };
+    Q_DECLARE_FLAGS(Scopes, Scope)
+    
     explicit OAuthConnection(int clientId, QObject *parent = 0);
     explicit OAuthConnection(QObject *parent = 0);
     virtual ~OAuthConnection();
@@ -67,16 +91,21 @@ public:
     void setClientId(int clientId);
     DisplayType displayType() const;
     void setDisplayType(DisplayType displayType);
+    Scopes scopes() const;
+    void setScopes(Scopes scopes);
 signals:
     void authConfirmRequested(QWebPage *page);
     void accessTokenChanged(const QByteArray &token, time_t expiresIn);
     void clientIdChanged(int clientId);
+    void scopesChanged(Vreen::OAuthConnection::Scopes scopes);
 protected:
 	QNetworkRequest makeRequest(const QString &method, const QVariantMap &args = QVariantMap());
     void decorateRequest(QNetworkRequest &);
 private:
     Q_PRIVATE_SLOT(d_func(), void _q_loadFinished(bool))
 };
+
+Q_DECLARE_OPERATORS_FOR_FLAGS(OAuthConnection::Scopes)
 
 } // namespace Vreen
 

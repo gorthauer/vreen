@@ -32,6 +32,7 @@
 
 #include <json.h>
 #include <vreen/private/connection_p.h>
+#include <vreen/utils.h>
 
 #include <QDebug>
 #include <QWebElement>
@@ -44,6 +45,9 @@ namespace Vreen {
 
 const static QUrl authUrl("http://api.vk.com/oauth/authorize");
 const static QUrl apiUrl("https://api.vk.com/method/");
+const static char *scopeNames[] = { "notify", "friends", "photos", "audio", 
+    "video", "docs", "notes", "pages", "status", "offers", "questions", "wall", 
+    "groups", "messages", "notifications", "stats", "ads", "offline" };
 
 class OAuthConnection;
 class OAuthConnectionPrivate : public ConnectionPrivate
@@ -53,24 +57,24 @@ public:
     OAuthConnectionPrivate(OAuthConnection *q, int appId) : ConnectionPrivate(q),
         connectionState(Client::StateOffline),
         clientId(appId),
-        scope(QStringList() << QLatin1String("notify")
-                            << QLatin1String("friends")
-                            << QLatin1String("photos")
-                            << QLatin1String("audio")
-                            << QLatin1String("video")
-                            << QLatin1String("docs")
-                            << QLatin1String("notes")
-                            << QLatin1String("pages")
-                            << QLatin1String("status")
-                            << QLatin1String("offers")
-                            << QLatin1String("questions")
-                            << QLatin1String("wall")
-                            << QLatin1String("groups")
-                            << QLatin1String("messages")
-                            << QLatin1String("notifications")
-                            << QLatin1String("stats")
-                            << QLatin1String("ads")
-                            << QLatin1String("offline")),
+        scope(OAuthConnection::notify|
+              OAuthConnection::friends|
+              OAuthConnection::photos|
+              OAuthConnection::audio|
+              OAuthConnection::video|
+              OAuthConnection::docs|
+              OAuthConnection::notes|
+              OAuthConnection::pages|
+              OAuthConnection::status|
+              OAuthConnection::offers|
+              OAuthConnection::questions|
+              OAuthConnection::wall|
+              OAuthConnection::groups|
+              OAuthConnection::messages|
+              OAuthConnection::notifications|
+              OAuthConnection::stats|
+              OAuthConnection::ads|
+              OAuthConnection::offline),
         redirectUri(QLatin1String("http://oauth.vk.com/blank.html")),
         displayType(OAuthConnection::Touch),
         responseType(QLatin1String("token")),
@@ -84,7 +88,7 @@ public:
 
     //OAuth settings
     int clientId;
-    QStringList scope; //settings
+    OAuthConnection::Scopes scope; //settings
     QString redirectUri;
     OAuthConnection::DisplayType displayType;
     QString responseType;
@@ -238,6 +242,20 @@ void OAuthConnection::setDisplayType(OAuthConnection::DisplayType displayType)
     }
 }
 
+OAuthConnection::Scopes OAuthConnection::scopes() const
+{
+    return d_func()->scope;
+}
+
+void OAuthConnection::setScopes(OAuthConnection::Scopes scopes)
+{
+    Q_D(OAuthConnection);
+    if( d->scope != scopes ) {
+        d->scope = scopes;
+        emit scopesChanged(scopes);
+    }
+}
+
 void OAuthConnectionPrivate::requestToken()
 {
     Q_Q(OAuthConnection);
@@ -248,7 +266,7 @@ void OAuthConnectionPrivate::requestToken()
     }
     QUrl url = authUrl;
     url.addQueryItem(QLatin1String("client_id"), QByteArray::number(clientId));
-    url.addQueryItem(QLatin1String("scope"), scope.join(","));
+    url.addQueryItem(QLatin1String("scope"), flagsToStrList(scope, scopeNames).join(","));
     url.addQueryItem(QLatin1String("redirect_uri"), redirectUri);
     const char *type[] = {
         "page",
