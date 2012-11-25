@@ -57,24 +57,24 @@ public:
     OAuthConnectionPrivate(OAuthConnection *q, int appId) : ConnectionPrivate(q),
         connectionState(Client::StateOffline),
         clientId(appId),
-        scope(OAuthConnection::notify|
-              OAuthConnection::friends|
-              OAuthConnection::photos|
-              OAuthConnection::audio|
-              OAuthConnection::video|
-              OAuthConnection::docs|
-              OAuthConnection::notes|
-              OAuthConnection::pages|
-              OAuthConnection::status|
-              OAuthConnection::offers|
-              OAuthConnection::questions|
-              OAuthConnection::wall|
-              OAuthConnection::groups|
-              OAuthConnection::messages|
-              OAuthConnection::notifications|
-              OAuthConnection::stats|
-              OAuthConnection::ads|
-              OAuthConnection::offline),
+        scope(OAuthConnection::Notify|
+              OAuthConnection::Friends|
+              OAuthConnection::Photos|
+              OAuthConnection::Audio|
+              OAuthConnection::Video|
+              OAuthConnection::Docs|
+              OAuthConnection::Notes|
+              OAuthConnection::Pages|
+              OAuthConnection::Status|
+              OAuthConnection::Offers|
+              OAuthConnection::Questions|
+              OAuthConnection::Wall|
+              OAuthConnection::Groups|
+              OAuthConnection::Messages|
+              OAuthConnection::Notifications|
+              OAuthConnection::Stats|
+              OAuthConnection::Ads|
+              OAuthConnection::Offline),
         redirectUri(QLatin1String("http://oauth.vk.com/blank.html")),
         displayType(OAuthConnection::Touch),
         responseType(QLatin1String("token")),

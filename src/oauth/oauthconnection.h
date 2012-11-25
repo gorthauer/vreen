@@ -51,24 +51,24 @@ public:
         Wap
     };
     enum Scope {
-        notify        = 0x1,
-        friends       = 0x2,
-        photos        = 0x4,
-        audio         = 0x8,
-        video         = 0x10,
-        docs          = 0x20,
-        notes         = 0x40,
-        pages         = 0x80,
-        status        = 0x100,
-        offers        = 0x200,
-        questions     = 0x400,
-        wall          = 0x800,
-        groups        = 0x1000,
-        messages      = 0x2000,
-        notifications = 0x4000,
-        stats         = 0x8000,
-        ads           = 0x10000,
-        offline       = 0x20000
+        Notify        = 0x1,
+        Friends       = 0x2,
+        Photos        = 0x4,
+        Audio         = 0x8,
+        Video         = 0x10,
+        Docs          = 0x20,
+        Notes         = 0x40,
+        Pages         = 0x80,
+        Status        = 0x100,
+        Offers        = 0x200,
+        Questions     = 0x400,
+        Wall          = 0x800,
+        Groups        = 0x1000,
+        Messages      = 0x2000,
+        Notifications = 0x4000,
+        Stats         = 0x8000,
+        Ads           = 0x10000,
+        Offline       = 0x20000
     };
     Q_DECLARE_FLAGS(Scopes, Scope)
     
