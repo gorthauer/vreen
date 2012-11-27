@@ -61,6 +61,7 @@ class VK_SHARED_EXPORT Client : public QObject
     Q_PROPERTY(Vreen::Connection* connection READ connection WRITE setConnection NOTIFY connectionChanged DESIGNABLE true)
     Q_PROPERTY(QString activity READ activity WRITE setActivity NOTIFY activityChanged DESIGNABLE true)
     Q_PROPERTY(bool invisible READ isInvisible WRITE setInvisible NOTIFY invisibleChanged)
+    Q_PROPERTY(bool trackMessages READ trackMessages WRITE setTrackMessages NOTIFY trackMessagesChanged)
 
     Q_ENUMS(State)
     Q_ENUMS(Error)
@@ -97,6 +98,8 @@ public:
     void setActivity(const QString &activity);
     bool isInvisible() const;
     void setInvisible(bool set);
+    bool trackMessages() const;
+    void setTrackMessages(bool set);
 
     Connection *connection() const;
     Connection *connection();
@@ -139,6 +142,7 @@ signals:
     void meChanged(Vreen::Buddy *me);
     void activityChanged(const QString &activity);
     void invisibleChanged(bool set);
+    void trackMessagesChanged(bool set);
 protected:
     Reply *setStatus(const QString &text, int aid = 0);
     QScopedPointer<ClientPrivate> d_ptr;

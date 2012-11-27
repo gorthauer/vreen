@@ -44,7 +44,7 @@ class ClientPrivate
 {
     Q_DECLARE_PUBLIC(Client)
 public:
-    ClientPrivate(Client *q) : q_ptr(q), isInvisible(false)
+    ClientPrivate(Client *q) : q_ptr(q), isInvisible(false), trackMessages(true)
     {
         onlineUpdater.setInterval(15000 * 60);
         onlineUpdater.setSingleShot(false);
@@ -59,6 +59,7 @@ public:
     QPointer<GroupManager> groupManager;
     QString activity;
     bool isInvisible;
+    bool trackMessages;
     QTimer onlineUpdater;
 
     void setOnlineUpdaterRunning(bool set);

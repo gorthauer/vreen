@@ -59,6 +59,7 @@ public:
 
     void _q_request_server_finished(const QVariant &response);
     void _q_on_data_recieved(const QVariant &response);
+    void _q_update_running();
     Attachment::List getAttachments(const QVariantMap &map);
 };
 

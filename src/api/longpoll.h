@@ -91,6 +91,7 @@ protected:
 
     Q_PRIVATE_SLOT(d_func(), void _q_request_server_finished(const QVariant &))
     Q_PRIVATE_SLOT(d_func(), void _q_on_data_recieved(const QVariant &))
+    Q_PRIVATE_SLOT(d_func(), void _q_update_running());
 };
 
 } // namespace Vreen

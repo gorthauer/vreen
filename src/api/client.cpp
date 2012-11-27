@@ -150,9 +150,6 @@ LongPoll *Client::longPoll()
     if (d->longPoll.isNull()) {
         d->longPoll = new LongPoll(this);
 
-        connect(this, SIGNAL(onlineStateChanged(bool)),
-                d->longPoll.data(), SLOT(setRunning(bool)));
-
         emit longPollChanged(d->longPoll.data());
     }
     return d->longPoll.data();
@@ -306,6 +303,20 @@ void Client::setInvisible(bool set)
         if (isOnline())
             d->setOnlineUpdaterRunning(!set);
         emit invisibleChanged(set);
+    }
+}
+
+bool Client::trackMessages() const
+{
+    return d_func()->trackMessages;
+}
+
+void Client::setTrackMessages(bool set)
+{
+    Q_D(Client);
+    if( d->trackMessages != set ) {
+        d->trackMessages = set;
+        emit trackMessagesChanged(set);
     }
 }
 

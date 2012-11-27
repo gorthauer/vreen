@@ -49,9 +49,10 @@ LongPoll::LongPoll(Client *client) :
 {
     Q_D(LongPoll);
     d->client = client;
-    setRunning(client->isOnline());
+    setRunning(client->isOnline() && client->trackMessages());
 
-    connect(client, SIGNAL(onlineStateChanged(bool)), SLOT(setRunning(bool)));
+    connect(client, SIGNAL(onlineStateChanged(bool)), SLOT(_q_update_running()));
+    connect(client, SIGNAL(trackMessagesChanged(bool)), SLOT(_q_update_running()));
 }
 
 LongPoll::~LongPoll()
@@ -231,6 +232,12 @@ void LongPollPrivate::_q_on_data_recieved(const QVariant &response)
     }
 
     q->requestData(data.value("ts").toByteArray());
+}
+
+void LongPollPrivate::_q_update_running()
+{
+    Q_Q(LongPoll);
+    q->setRunning(client->isOnline() && client->trackMessages());
 }
 
 Attachment::List LongPollPrivate::getAttachments(const QVariantMap &map)
