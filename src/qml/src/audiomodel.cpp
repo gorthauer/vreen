@@ -31,27 +31,32 @@ AudioModel::AudioModel(QObject *parent) :
 {
 }
 
-Vreen::Contact *AudioModel::owner() const
+Vreen::Client* AudioModel::client() const
 {
-    return m_owner.data();
+    return m_client.data();
 }
 
-void AudioModel::setOwner(Vreen::Contact *owner)
+void AudioModel::setClient(Vreen::Client* client)
 {
-    if (m_owner != owner) {
-        m_owner = owner;
-        if (!owner)
+    if (m_client != client) {
+        m_client = client;
+        if (!client)
             m_provider.data()->deleteLater();
         else
-            m_provider = new Vreen::AudioProvider(owner->client());
-        emit ownerChanged(owner);
+            m_provider = new Vreen::AudioProvider(client);
+        emit clientChanged(client);
     }
 }
 
-void AudioModel::getAudio(int count, int offset)
+void AudioModel::getAudio(Vreen::Contact* contact, int count, int offset)
+{
+    getAudio(contact->id(), count, offset);
+}
+
+void AudioModel::getAudio(int id, int count, int offset)
 {
     if (m_provider.data()) {
-        auto reply = m_provider.data()->getContactAudio(m_owner->id(), count, offset);
+        auto reply = m_provider.data()->getContactAudio(id, count, offset);
         connect(reply, SIGNAL(resultReady(QVariant)),
                 this, SLOT(onResultReady()));
     }
