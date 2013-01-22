@@ -72,4 +72,6 @@ PollItem Attachment::to(const Attachment &data);
 
 } //namespace Vreen
 
+Q_DECLARE_METATYPE(Vreen::PollItem)
+
 #endif // POLLITEM_H

@@ -25,19 +25,26 @@
 #ifndef VREEN_POLLPROVIDER_H
 #define VREEN_POLLPROVIDER_H
 
-#include "client.h"
+#include "pollitem.h"
+#include "reply.h"
 
 namespace Vreen {
+    
+class Client;
+typedef ReplyBase<Vreen::PollItem> PollItemReply;
 
 class PollProviderPrivate;
-
-class PollProvider : public QObject
+class VK_SHARED_EXPORT PollProvider : public QObject
 {
     Q_OBJECT
     Q_DECLARE_PRIVATE(PollProvider)
 public:
     explicit PollProvider(Client *client);
     ~PollProvider();
+    
+    PollItemReply *getPollById(int ownerId, int pollId);
+    Reply *addVote(int pollId, int answerId, int ownerId = 0);
+    Reply *deleteVote(int pollId, int answerId, int ownerId = 0);
 protected:
     QScopedPointer<PollProviderPrivate> d_ptr;
 };
