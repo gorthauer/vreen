@@ -28,8 +28,7 @@ Rectangle {
 
         onOnlineChanged: {
             if (online) {
-                owner.update();
-                getAudio(client.me);
+                audioModel.getAudio();
             }
         }
 
@@ -47,7 +46,7 @@ Rectangle {
     }
 
     ListView {
-        id: dialogsView
+        id: audioView
 
         anchors.fill: parent
         scale: 0
@@ -169,7 +168,7 @@ Rectangle {
                 scale: 0
             }
             PropertyChanges {
-                target: dialogsView
+                target: audioView
                 scale: 1
             }
         }
@@ -178,7 +177,7 @@ Rectangle {
         Transition {
             from: "*"
             to: "online"
-            NumberAnimation { target: dialogsView; property: "scale"; duration: 400; easing.type: Easing.InOutQuad }
+            NumberAnimation { target: audioView; property: "scale"; duration: 400; easing.type: Easing.InOutQuad }
             NumberAnimation { target: login; property: "scale"; duration: 400; easing.type: Easing.InOutQuad }
         }
     ]
