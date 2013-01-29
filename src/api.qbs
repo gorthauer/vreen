@@ -1,4 +1,5 @@
 import qbs.base 1.0
+import qbs.fileinfo 1.0 as FileInfo
 
 Product {
     name: "vreen"
@@ -37,28 +38,24 @@ Product {
     Depends { name: "k8json" }
     Depends { name: "vreen.core" }
 
-    Group {
-        qbs.installDir: "include/vreen/" + version + "/vreen/private"
-        //qbs.install: true
-        fileTags: 'install'
-        overrideTags: false
-
-        files: [
-            "api/*_p.h",
-            "api/draft/*_p.h",
-            "api/draft/*.h"
-        ]        
-    }    
-    Group {
-        qbs.installDir: "include/vreen"
-        //qbs.install: true
-        fileTags: 'install'
-        overrideTags: false
-
-        files: [
-            "api/*[^_][a-z].h",
-        ]
-    }
+//    Group {
+//        qbs.installDir: "include/vreen/" + version + "/vreen/private"
+//        fileTags: ["install"]
+//        overrideTags: false
+//        files: [
+//            "api/*_p.h",
+//            "api/draft/*_p.h",
+//            "api/draft/*.h"
+//        ]
+//    }
+//    Group {
+//        qbs.installDir: "include/vreen"
+//        fileTags: ["install"]
+//        overrideTags: false
+//        files: [
+//            "api/*[^_][a-z].h",
+//        ]
+//    }
 
     ProductModule {
         Depends { name: "cpp" }
@@ -66,10 +63,71 @@ Product {
         Depends { name: "vreen.core" }
 
         cpp.includePaths: [
-            product.buildDirectory + "/include",
-            product.buildDirectory + "/include/vreen",
-            product.buildDirectory + "/include/vreen/" +  "0.9.5" //hack
+            product.buildDirectory + "/GeneratedFiles/vreen/include",
+            product.buildDirectory + "/GeneratedFiles/vreen/include/vreen",
+            product.buildDirectory + "/GeneratedFiles/vreen/include/vreen/" +  "0.9.5" //hack
         ]
         cpp.rpaths: product.buildDirectory + "/" + vreen.core.libDestination
+    }
+
+    Group {
+        files: [
+            "api/*_p.h",
+            "api/draft/*_p.h",
+            "api/draft/*.h"
+        ]
+        fileTags: ["hpp", "privdevheader"]
+        overrideTags: false
+    }
+
+    Group {
+        files: "api/*.h"
+        excludeFiles: "api/*_p.h"
+        fileTags: ["hpp", "devheader"]
+        overrideTags: false
+    }
+
+    Rule {
+        inputs: [ "devheader" ]
+        Artifact {
+            fileTags: [ "hpp" ]
+            fileName: "GeneratedFiles/vreen/include/vreen/" + input.fileName
+        }
+
+        prepare: {
+            var cmd = new JavaScriptCommand();
+            cmd.sourceCode = function() {
+                var inputFile = new TextFile(input.fileName, TextFile.ReadOnly);
+                var file = new TextFile(output.fileName, TextFile.WriteOnly);
+                file.truncate();
+                file.write("#include \"" + input.fileName + "\"\n");
+                file.close();
+            }
+            cmd.description = "generating " + FileInfo.fileName(output.fileName);
+            cmd.highlight = "filegen";
+            return cmd;
+        }
+    }
+
+    Rule {
+        inputs: [ "privdevheader" ]
+        Artifact {
+            fileTags: [ "hpp" ]
+            fileName: "GeneratedFiles/vreen/include/vreen/private/" + input.fileName
+        }
+
+        prepare: {
+            var cmd = new JavaScriptCommand();
+            cmd.sourceCode = function() {
+                var inputFile = new TextFile(input.fileName, TextFile.ReadOnly);
+                var file = new TextFile(output.fileName, TextFile.WriteOnly);
+                file.truncate();
+                file.write("#include \"" + input.fileName + "\"\n");
+                file.close();
+            }
+            cmd.description = "generating " + FileInfo.fileName(output.fileName);
+            cmd.highlight = "filegen";
+            return cmd;
+        }
     }
 }
