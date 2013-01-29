@@ -206,7 +206,7 @@ Contact *Client::contact(int id) const
         if (!contact && groupManager())
             contact = groupManager()->group(id);
     } else if (groupManager())
-        contact = groupManager()->group(-id);
+        contact = groupManager()->group(id);
     return contact;
 }
 
