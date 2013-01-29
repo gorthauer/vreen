@@ -22,6 +22,7 @@
 ** $VREEN_END_LICENSE$
 **
 ****************************************************************************/
+#include <QDebug>
 #include "contact_p.h"
 #include "message.h"
 #include "roster_p.h"
@@ -83,6 +84,8 @@ void Contact::fillContact(Contact *contact, const QVariantMap &data)
 Buddy::Buddy(int id, Client *client) :
     Contact(new BuddyPrivate(this, id, client))
 {
+    if (id < 0)
+        qWarning() << "Buddy's id must be positive";
 }
 
 QString Buddy::firstName() const
@@ -249,6 +252,8 @@ Group::Group(int id, Client *client) :
 	Contact(new GroupPrivate(this, id, client))
 {
     Q_D(Group);
+    if (id > 0)
+        qWarning() << "Group's id must be negative";
     d->type = GroupType;
 }
 
