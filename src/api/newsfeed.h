@@ -54,9 +54,9 @@ public:
     NewsFeed(Client *client);
     virtual ~NewsFeed();
 public slots:
-	Reply *getNews(Filters filters = FilterNone, quint8 count = 25, int offset = 0);
+    Reply *getNews(Filters filters = FilterNone, quint8 count = 25, int offset = 0);
 signals:
-	void newsRecieved(const Vreen::NewsItemList &list);
+    void newsReceived(const Vreen::NewsItemList &list);
 private:
     QScopedPointer<NewsFeedPrivate> d_ptr;
 
