@@ -121,6 +121,22 @@ AudioItemListReply *AudioProvider::searchAudio(const QString& query, int count, 
     return reply;
 }
 
+AudioItemListReply *AudioProvider::getRecommendationsForUser(int uid, int count, int offset)
+{
+    Q_D(AudioProvider);
+    QVariantMap args;
+    if (uid < 0) {
+        qDebug("Vreen::AudioProvider::getRecomendationForUser may not work with groups (uid < 0)");
+
+    }
+    args.insert("uid",uid);
+    args.insert("count", count);
+    args.insert("offset", offset);
+
+    auto reply = d->client->request<AudioItemListReply>("audio.getRecommendations", args, AudioProviderPrivate::handleAudio);
+    return reply;
+}
+
 IntReply *AudioProvider::getCount(int oid)
 {
     Q_D(AudioProvider);
