@@ -24,6 +24,7 @@
 ****************************************************************************/
 #include "audio.h"
 #include "client.h"
+#include "reply_p.h"
 #include "utils_p.h"
 #include <QUrl>
 #include <QCoreApplication>
@@ -117,6 +118,19 @@ AudioItemListReply *AudioProvider::searchAudio(const QString& query, int count, 
     args.insert("offset", offset);
 
     auto reply = d->client->request<AudioItemListReply>("audio.search", args, AudioProviderPrivate::handleAudio);
+    return reply;
+}
+
+IntReply *AudioProvider::getCount(int oid)
+{
+    Q_D(AudioProvider);
+
+    oid = oid?oid:d->client->id();
+
+    QVariantMap args;
+    args.insert("oid", oid);
+
+    auto reply = d->client->request<IntReply>("audio.getCount", args, ReplyPrivate::handleInt);
     return reply;
 }
 
