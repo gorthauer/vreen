@@ -150,6 +150,17 @@ IntReply *AudioProvider::getCount(int oid)
     return reply;
 }
 
+AudioItemListReply *AudioProvider::getAudioByIds(const QString &ids)
+{
+    Q_D(AudioProvider);
+
+    QVariantMap args;
+    args.insert("audios", ids);
+
+    auto reply = d->client->request<AudioItemListReply>("audio.getById", args, AudioProviderPrivate::handleAudio);
+    return reply;
+}
+
 class AudioModel;
 class AudioModelPrivate
 {
