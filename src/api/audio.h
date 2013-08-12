@@ -52,10 +52,12 @@ public:
     AudioProvider(Client *client);
     virtual ~AudioProvider();
     AudioItemListReply *getContactAudio(int uid = 0, int count = 50, int offset = 0);
-    AudioItemListReply *getAudioByIds(const QString& ids);
+    AudioItemListReply *getAudiosByIds(const QString& ids);
     AudioItemListReply *getRecommendationsForUser(int uid = 0, int count = 50, int offset = 0);
     AudioItemListReply *searchAudio(const QString& query, int count = 50, int offset = 0, bool autoComplete = true, Vreen::AudioProvider::SortOrder sort = SortByPopularity, bool withLyrics = false);
     IntReply *getCount(int oid = 0);
+    IntReply *addToLibrary(int aid, int oid, int gid = 0);
+    IntReply *removeFromLibrary(int aid, int oid);
 protected:
     QScopedPointer<AudioProviderPrivate> d_ptr;
 };
