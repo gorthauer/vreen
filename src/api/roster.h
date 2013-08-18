@@ -69,8 +69,8 @@ public:
     Buddy *buddy(int id) const;
     BuddyList buddies() const;
 
-    QStringList tags() const;
-    void setTags(const QStringList &list);
+    QMap<int, QString> tags() const;
+    void setTags(const QMap<int, QString> &list);
     Reply *getDialogs(int offset = 0, int count = 16, int previewLength = -1);
     Reply *getMessages(int offset = 0, int count = 50, Message::Filter filter = Message::FilterNone);
 public slots:
@@ -88,7 +88,7 @@ signals:
     void buddyAdded(Vreen::Buddy *buddy);
     void buddyUpdated(Vreen::Buddy *buddy);
 	void buddyRemoved(int id);
-    void tagsChanged(const QStringList &);
+    void tagsChanged(const QMap<int, QString> &);
     void syncFinished(bool success);
     void uidChanged(int uid);
 protected:

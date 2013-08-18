@@ -149,7 +149,7 @@ QStringList Buddy::tags() const
     Q_D(const Buddy);
     QStringList tags;
     foreach (auto data, d->tagIdList) {
-        int id = data.toInt() - 1;
+        int id = data.toInt();
         tags.append(d->client->roster()->tags().value(id, tr("Unknown tag id %1").arg(id)));
     }
     return tags;
