@@ -36,10 +36,6 @@ BuddyModel::BuddyModel(QObject *parent) :
 {
     auto roles = roleNames();
     roles[ContactRole] = "contact";
-    roles[StatusStringRole] = "statusString";
-    roles[PhotoRole] = "photo";
-    roles[NameRole] = "name";
-    roles[ActivityRole] = "activity";
     setRoleNames(roles);
 }
 
@@ -51,7 +47,7 @@ void BuddyModel::setRoster(Vreen::Roster *roster)
 
     setBuddies(roster->buddies());
     connect(roster, SIGNAL(buddyAdded(Vreen::Buddy*)), SLOT(addBuddy(Vreen::Buddy*)));
-	connect(roster, SIGNAL(buddyRemoved(int)), SLOT(removeFriend(int)));
+    connect(roster, SIGNAL(buddyRemoved(int)), SLOT(removeFriend(int)));
     connect(roster, SIGNAL(syncFinished(bool)), SLOT(onSyncFinished()));
     emit rosterChanged(roster);
 }
@@ -83,30 +79,7 @@ QVariant BuddyModel::data(const QModelIndex &index, int role) const
         return qVariantFromValue(contact);
         break;
     }
-    case StatusStringRole: {
-        auto buddy = m_buddyList.at(row);
-        auto status = buddy ? buddy->status() : Vreen::Contact::Unknown;
-        switch (status) {
-        case Vreen::Contact::Online:
-            return tr("Online");
-        case Vreen::Contact::Offline:
-            return tr("Offline");
-        case Vreen::Contact::Away:
-            return tr("Away");
-        default:
-            break;
-        }
-    }
-    case ActivityRole: {
-        return m_buddyList.at(row)->activity();
-    }
-    case NameRole: {
-        return m_buddyList.at(row)->name();
-    }
-    case PhotoRole: {
-        auto contact = m_buddyList.at(row);
-        return contact->photoSource(Vreen::Contact::PhotoSizeMediumRec);
-    } default:
+    default:
         break;
     }
     return QVariant();
@@ -125,9 +98,9 @@ void BuddyModel::setFilterByName(const QString &filter)
     emit filterByNameChanged(filter);
 
     Vreen::BuddyList list;
-    foreach (auto buddy, m_roster->buddies()) {
+    for (auto & buddy : m_roster->buddies()) {
         if (checkContact(buddy)) {
-            auto it = qLowerBound(list.begin(), list.end(), buddy, m_buddyComparator);
+            auto it = qLowerBound(std::begin(list), std::end(list), buddy, m_buddyComparator);
             list.insert(it, buddy);
         }
     }
@@ -141,9 +114,9 @@ QString BuddyModel::filterByName()
 
 void BuddyModel::clear()
 {
-    beginRemoveRows(QModelIndex(), 0, m_buddyList.count());
+    beginResetModel();
     m_buddyList.clear();
-    endRemoveRows();
+    endResetModel();
 }
 int BuddyModel::findContact(int id) const
 {
@@ -157,7 +130,8 @@ void BuddyModel::addBuddy(Vreen::Buddy *contact)
 {
     if (!checkContact(contact))
         return;
-    int index = Vreen::lowerBound(m_buddyList, contact, m_buddyComparator);
+    auto it = qLowerBound(std::begin(m_buddyList), std::end(m_buddyList), contact, m_buddyComparator);
+    int index = std::distance(std::begin(m_buddyList), it);
 
     beginInsertRows(QModelIndex(), index, index);
     m_buddyList.insert(index, contact);

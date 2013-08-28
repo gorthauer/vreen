@@ -38,11 +38,7 @@ class BuddyModel : public QAbstractListModel
     Q_PROPERTY(QString filterByName READ filterByName WRITE setFilterByName NOTIFY filterByNameChanged)
 public:
     enum Roles {
-        ContactRole = Qt::UserRole + 1,
-        StatusStringRole,
-        NameRole,
-        ActivityRole,
-        PhotoRole
+        ContactRole = Qt::UserRole + 1
     };
 
     struct CompareType

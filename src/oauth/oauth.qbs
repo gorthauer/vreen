@@ -9,7 +9,7 @@ Product {
     //cpp.warningLevel: "all"
 
     Depends { name: "cpp" }
-    Depends { name: "qt"; submodules: ['core', 'network', 'widgets', 'webkit', 'webkitWidgets'] }
+    Depends { name: "Qt"; submodules: ['core', 'network', 'widgets', 'webkit', 'webkitwidgets'] }
     Depends { name: "vreen" }
     Depends { name: "vreen.core" }
 
@@ -18,14 +18,14 @@ Product {
     ]
 
     Properties {
-        condition: qt.core.versionMajor === 5
+        condition: Qt.core.versionMajor === 5
         cpp.defines: base.concat("QT_DISABLE_DEPRECATED_BEFORE=0")
     }
 
     ProductModule {
         Depends { name: "cpp" }
-        Depends { name: "qt.webkit"}
-        Depends { name: "qt.webkitwidgets"}
+        Depends { name: "Qt.webkit"}
+        Depends { name: "Qt.webkitwidgets"}
         
         cpp.defines: base.concat("VREEN_WITH_OAUTH")
     }

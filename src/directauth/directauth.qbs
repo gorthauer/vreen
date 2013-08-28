@@ -20,7 +20,7 @@ Product {
     //cpp.warningLevel: "all"
 
     Depends { name: "cpp" }
-    Depends { name: "qt"; submodules: ['core', 'network', 'webkit'] }
+    Depends { name: "Qt"; submodules: ['core', 'network', 'webkit'] }
     Depends { name: "vreen" }
 
     files: [

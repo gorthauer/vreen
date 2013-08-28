@@ -2,6 +2,7 @@ import qbs.base 1.0
 import qbs.fileinfo as FileInfo
 
 Module {
+    property string binDestination: 'bin'
     property string libDestination: {
         if (qbs.targetOS === 'windows')
             return "bin";
@@ -16,7 +17,7 @@ Module {
     property string version: versionMajor + '.' + versionMinor + '.' + versionRelease
 
     Depends { name: "cpp" }
-    Depends { name: "qt.core"}
+    Depends { name: "Qt.core"}
 
     Properties {
         condition: qbs.toolchain != 'msvc'

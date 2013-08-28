@@ -132,16 +132,6 @@ struct Comparator : public ComparatorBase<Item, Value, Value (*)(const Item &)>
     }
 };
 
-//template <typename Container, typename Method>
-//struct Comparator2 : public ComparatorBase<Container, decltype(Method()), Method>
-//{
-//    Comparator2(Method method, Qt::SortOrder order = Qt::AscendingOrder) :
-//        ComparatorBase<Container, Item, Item (*)(const Container &)>(method, order)
-//    {
-
-//    }
-//};
-
 template <typename Container>
 struct IdComparator : public Comparator<Container, int>
 {
@@ -154,34 +144,6 @@ private:
     inline static int id_(const Container &a) { return a.id(); }
 };
 
-//template <typename T>
-//struct IdComparator
-//{
-//    IdComparator(Qt::SortOrder order = Qt::AscendingOrder) :
-//        sortOrder(order)
-//    {
-
-//    }
-//    inline bool operator() (const T &a, const T &b) const
-//    {
-//        return operator ()(a.id(), b.id());
-//    }
-//    inline bool operator() (const T &a, int id) const
-//    {
-//        return operator ()(a.id(), id);
-//    }
-//    inline bool operator() (int id, const T &b) const
-//    {
-//        return operator ()(id, b.id());
-//    }
-//    inline bool operator ()(int a, int b) const
-//    {
-//        return sortOrder == Qt::AscendingOrder ? a < b
-//                                               : a > b;
-//    }
-
-//    Qt::SortOrder sortOrder;
-//};
 
 } //namespace Vreen
 

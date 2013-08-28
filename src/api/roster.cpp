@@ -121,12 +121,12 @@ BuddyList Roster::buddies() const
     return d_func()->buddyHash.values();
 }
 
-QStringList Roster::tags() const
+QMap<int, QString> Roster::tags() const
 {
     return d_func()->tags;
 }
 
-void Roster::setTags(const QStringList &tags)
+void Roster::setTags(const QMap<int, QString> &tags)
 {
     d_func()->tags = tags;
     emit tagsChanged(tags);
@@ -284,9 +284,9 @@ void RosterPrivate::_q_tags_received(const QVariant &response)
 {
     Q_Q(Roster);
     auto list = response.toList();
-    QStringList tags;
+    QMap<int, QString> tags;
     foreach (auto item, list) {
-        tags.append(item.toMap().value("name").toString());
+        tags.insert(item.toMap().value("lid").toInt(),item.toMap().value("name").toString());
     }
     q->setTags(tags);
 }

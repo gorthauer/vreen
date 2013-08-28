@@ -26,7 +26,7 @@ Product {
     ]
 
     Properties {
-        condition: qt.core.versionMajor === 5
+        condition: Qt.core.versionMajor === 5
         cpp.defines: outer.concat("QT_DISABLE_DEPRECATED_BEFORE=0")
     }
 
@@ -34,25 +34,6 @@ Product {
     Depends { name: "Qt"; submodules: ["core", "network", "gui"] }
     Depends { name: "k8json" }
     Depends { name: "vreen.core" }
-
-//    Group {
-//        qbs.installDir: "include/vreen/" + version + "/vreen/private"
-//        fileTags: ["install"]
-//        overrideTags: false
-//        files: [
-//            "api/*_p.h",
-//            "api/draft/*_p.h",
-//            "api/draft/*.h"
-//        ]
-//    }
-//    Group {
-//        qbs.installDir: "include/vreen"
-//        fileTags: ["install"]
-//        overrideTags: false
-//        files: [
-//            "api/*[^_][a-z].h",
-//        ]
-//    }
 
     ProductModule {
         Depends { name: "cpp" }
@@ -86,5 +67,11 @@ Product {
         overrideTags: false
         qbs.installDir: "include/vreen"
         qbs.install: true
+    }
+
+    Group {
+        fileTagsFilter: 'dynamiclibrary'
+        qbs.install: true
+        qbs.installDir: vreen.core.libDestination
     }
 }

@@ -50,7 +50,7 @@ public:
     Client *client;
     BuddyHash buddyHash;
     Buddy *owner;
-    QStringList tags;
+    QMap<int, QString> tags;
 
     //TODO i want to use Qt5 slots
     //class Updater {

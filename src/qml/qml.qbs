@@ -12,6 +12,7 @@ Product {
     cpp.includePaths: [
         "src"
     ]
+    cpp.rpaths: ["$ORIGIN/../../../../lib"]
 
     files: [
         "src/audiomodel.cpp",       "src/buddymodel.h",
@@ -28,14 +29,14 @@ Product {
     Depends { name: "cpp" }    
     Depends { name: "Qt.core" }    
     Depends { name: "Qt.network" }        
-    Depends { name: "Qt.declarative"; condition: qt.core.versionMajor === 4 }
-    Depends { name: "Qt.quick"; condition: qt.core.versionMajor === 5 }    
+    Depends { name: "Qt.declarative"; condition: Qt.core.versionMajor === 4 }
+    Depends { name: "Qt.quick"; condition: Qt.core.versionMajor === 5 }
     Depends { name: "vreen"}
     Depends { name: "vreenoauth" }
     Depends { name: "vreen.core" }
 
     Properties {
-        condition: qt.core.versionMajor === 5
+        condition: Qt.core.versionMajor === 5
         cpp.defines: base.concat("QT_DISABLE_DEPRECATED_BEFORE=0")
     }
 
@@ -49,11 +50,11 @@ Product {
         ]
     }
     Group {
-        condition: qt.core.versionMajor === 4
+        condition: Qt.core.versionMajor === 4
         files:  "vreenplugin_qt4.cpp"
     }
     Group {
-        condition: qt.core.versionMajor === 5
+        condition: Qt.core.versionMajor === 5
         files: "vreenplugin_qt5.cpp"
     }
     Group {
