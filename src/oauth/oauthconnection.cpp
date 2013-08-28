@@ -139,7 +139,7 @@ void OAuthConnection::connectToHost(const QString &login, const QString &passwor
         d->password = password;
     }
     if (!d->uid || d->accessToken.isNull()
-            || (d->expiresIn && d->expiresIn < QDateTime::currentDateTime().toTime_t())) {
+            || (d->expiresIn && d->expiresIn < static_cast<time_t>(QDateTime::currentDateTime().toTime_t()))) {
         d->requestToken();
         d->setConnectionState(Client::StateConnecting);
     } else

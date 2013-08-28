@@ -24,6 +24,7 @@
 ****************************************************************************/
 #include "audio.h"
 #include "client.h"
+#include "reply_p.h"
 #include "utils_p.h"
 #include <QUrl>
 #include <QCoreApplication>
@@ -117,6 +118,74 @@ AudioItemListReply *AudioProvider::searchAudio(const QString& query, int count, 
     args.insert("offset", offset);
 
     auto reply = d->client->request<AudioItemListReply>("audio.search", args, AudioProviderPrivate::handleAudio);
+    return reply;
+}
+
+AudioItemListReply *AudioProvider::getRecommendationsForUser(int uid, int count, int offset)
+{
+    Q_D(AudioProvider);
+    QVariantMap args;
+    if (uid < 0) {
+        qDebug("Vreen::AudioProvider::getRecomendationForUser may not work with groups (uid < 0)");
+
+    }
+    args.insert("uid",uid);
+    args.insert("count", count);
+    args.insert("offset", offset);
+
+    auto reply = d->client->request<AudioItemListReply>("audio.getRecommendations", args, AudioProviderPrivate::handleAudio);
+    return reply;
+}
+
+IntReply *AudioProvider::getCount(int oid)
+{
+    Q_D(AudioProvider);
+
+    oid = oid?oid:d->client->id();
+
+    QVariantMap args;
+    args.insert("oid", oid);
+
+    auto reply = d->client->request<IntReply>("audio.getCount", args, ReplyPrivate::handleInt);
+    return reply;
+}
+
+IntReply *AudioProvider::addToLibrary(int aid, int oid, int gid)
+{
+    Q_D(AudioProvider);
+
+    QVariantMap args;
+    args.insert("aid", aid);
+    args.insert("oid", oid);
+
+    if (gid) {
+        args.insert("gid",gid);
+    }
+
+    auto reply = d->client->request<IntReply>("audio.add", args, ReplyPrivate::handleInt);
+    return reply;
+}
+
+IntReply *AudioProvider::removeFromLibrary(int aid, int oid)
+{
+    Q_D(AudioProvider);
+
+    QVariantMap args;
+    args.insert("aid", aid);
+    args.insert("oid", oid);
+
+    auto reply = d->client->request<IntReply>("audio.delete", args, ReplyPrivate::handleInt);
+    return reply;
+}
+
+AudioItemListReply *AudioProvider::getAudiosByIds(const QString &ids)
+{
+    Q_D(AudioProvider);
+
+    QVariantMap args;
+    args.insert("audios", ids);
+
+    auto reply = d->client->request<AudioItemListReply>("audio.getById", args, AudioProviderPrivate::handleAudio);
     return reply;
 }
 
