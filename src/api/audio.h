@@ -52,7 +52,7 @@ public:
     
     AudioProvider(Client *client);
     virtual ~AudioProvider();
-    AudioItemListReply *getContactAudio(int uid = 0, int count = 50, int offset = 0);
+    AudioItemListReply *getContactAudio(int uid = 0, int count = 50, int offset = 0, int album_id = -1);
     AudioItemListReply *getAudiosByIds(const QString& ids);
     AudioItemListReply *getRecommendationsForUser(int uid = 0, int count = 50, int offset = 0);
     AudioItemListReply *searchAudio(const QString& query, int count = 50, int offset = 0, bool autoComplete = true, Vreen::AudioProvider::SortOrder sort = SortByPopularity, bool withLyrics = false);
